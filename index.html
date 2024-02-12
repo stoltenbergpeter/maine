@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <script type="text/javascript" charset="utf-8">
+  (function (g, e, n, es, ys) {
+    g['_genesysJs'] = e;
+    g[e] = g[e] || function () {
+      (g[e].q = g[e].q || []).push(arguments)
+    };
+    g[e].t = 1 * new Date();
+    g[e].c = es;
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+  })(window, 'Genesys', 'https://apps.usw2.pure.cloud/genesys-bootstrap/genesys.min.js', {
+    environment: 'prod-usw2',
+    deploymentId: 'b39480f0-2fec-4bbb-a2cd-46babb6e3078'
+  });
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Code Entry</title>
+<style>
+/* Modal styles */
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* Button styles */
+#enterButton {
+  background-color: #d22630;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Close button styles */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Secure Code Entry</h2>
+    <img src="https://www.bangorsymphony.org/wp-content/uploads/2018/04/Maine-Savings-Logo-Color-2018.png" alt="Logo" width="300" height="100">
+    <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <form id="secureCodeForm">
+      <label for="secureCode">Enter Secure Code:</label><br>
+      <input type="text" id="secureCode" name="secureCode" required><br><br>
+      <button type="submit" id="enterButton">Enter</button>
+    </form>
+  </div>
+
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+// Form submission
+document.getElementById("secureCodeForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+ Genesys("command", "Messenger.open")
+         Genesys("command", "Database.update", { messaging: { customAttributes: { deeplinkID: document.getElementById("secureCode").value }}}
+{},
+    function() {
+        /*fulfilled callback*/
+    },
+    function() {
+        /*rejected callback*/
+    }
+);
+  var secureCode = document.getElementById("secureCode").value;
+  console.log("Entered Secure Code:", secureCode);
+  // Close the modal after submission
+  modal.style.display = "none";
+});
+</script>
+
+</body>
+</html>
